@@ -1,0 +1,52 @@
+# language: YAML, file: .github/workflows/build.yml
+name: build-anon-os
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            nasm xorriso mtools dosfstools \
+            gcc-x86-64-elf binutils-x86-64-elf \
+            gnu-efi qemu-system-x86 ovmf
+
+      - name: Verify tools
+        run: |
+          x86_64-elf-gcc --version
+          nasm -v
+          xorriso --version | head -1
+          ls -l /usr/lib/crt0-efi-x86_64.o
+          ls -l /usr/share/OVMF/OVMF_CODE.fd
+
+      - name: Build kernel
+        run: make kernel
+
+      - name: Build loader
+        run: make loader
+
+      - name: Build ISO
+        run: make iso
+
+      - name: QEMU smoke test
+        run: make check
+
+      - name: Show ISO size
+        run: ls -lh build/anon-os.iso
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: anon-os-iso
+          path: build/anon-os.iso
+          retention-days: 30
+          if-no-files-found: error
