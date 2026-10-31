@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    timeout-minutes: 60
+    timeout-minutes: 90
 
     steps:
       - uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
             nasm xorriso mtools dosfstools \
             gnu-efi qemu-system-x86 ovmf \
             build-essential bison flex \
-            libgmp3-dev libmpc-dev libmpfr-dev texinfo wget
+            libgmp3-dev libmpc-dev libmpfr-dev texinfo wget git
 
       - name: Build x86_64-elf cross compiler
         run: |
@@ -73,7 +73,7 @@ jobs:
           x86_64-elf-gcc --version
           nasm -v
           xorriso --version | head -1
-          ls -l /usr/lib/crt0-efi-x86_64.o
+          ls -l /usr/lib/crt0-efi-x86_64.o /usr/lib/elf_x86_64_efi.lds
           ls -l /usr/share/OVMF/OVMF_CODE.fd
 
       - name: Build kernel
@@ -82,10 +82,14 @@ jobs:
           make kernel
 
       - name: Build loader
-        run: make loader
+        run: |
+          export PATH="$HOME/opt/cross/bin:$PATH"
+          make loader
 
       - name: Build ISO
-        run: make iso
+        run: |
+          export PATH="$HOME/opt/cross/bin:$PATH"
+          make iso
 
       - name: QEMU smoke test
         run: make check
