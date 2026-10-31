@@ -1,5 +1,6 @@
 # language: YAML, file: .github/workflows/build.yml
 name: build-anon-os
+
 on:
   push:
     branches: [main]
@@ -10,6 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     timeout-minutes: 20
+
     steps:
       - uses: actions/checkout@v4
 
