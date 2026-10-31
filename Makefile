@@ -15,9 +15,11 @@ EFI_CFLAGS := -ffreestanding -fno-stack-protector -mno-red-zone \
               -fshort-wchar -fno-pic -fno-pie -DEFI_FUNCTION_WRAPPER \
               -I/usr/include/efi -I/usr/include/efi/x86_64 \
               -Wall -Wextra -O2 -c
+
 EFI_CRT0   := /usr/lib/crt0-efi-x86_64.o
 EFI_LDS    := /usr/lib/elf_x86_64_efi.lds
-EFI_LIBS   := -lefi -lgnuefi
+EFI_LIBDIR := $(shell find /usr/lib /usr/lib64 /usr/lib/x86_64-linux-gnu -maxdepth 1 -name 'libefi.a' 2>/dev/null | head -1 | xargs -r dirname)
+EFI_LIBS   := -L$(EFI_LIBDIR) -lefi -lgnuefi
 
 BUILD     := build
 ISO_DIR   := $(BUILD)/iso
@@ -57,7 +59,8 @@ loader: $(LOADER)
 $(LOADER): boot/loader.c | $(BUILD)
 	$(CC) $(EFI_CFLAGS) $< -o $(BUILD)/boot.obj
 	$(LD) -nostdlib -znocombreloc -T $(EFI_LDS) -shared -Bsymbolic \
-	      -o $(BUILD)/boot.so $(EFI_CRT0) $(BUILD)/boot.obj $(EFI_LIBS)
+	      $(EFI_LIBS) \
+	      -o $(BUILD)/boot.so $(EFI_CRT0) $(BUILD)/boot.obj
 	$(OBJCOPY) -j .text -j .sdata -j .data -j .dynamic -j .dynsym \
 	           -j .rel -j .rela -j .reloc --target=efi-app-x86_64 \
 	           $(BUILD)/boot.so $@
