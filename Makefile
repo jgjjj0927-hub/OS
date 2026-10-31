@@ -9,7 +9,7 @@ QEMU      := qemu-system-x86_64
 KCFLAGS   := -ffreestanding -fno-stack-protector -mno-red-zone \
              -mcmodel=kernel -Wall -Wextra -O2 -std=c11 \
              -fno-pic -fno-pie -c
-KLDFLAGS  := -T kernel/kernel.ld -nostdlib -static -z noexecstack
+KLDFLAGS  := -T kernel/kernel.ld -nostdlib -static
 
 EFI_CFLAGS := -ffreestanding -fno-stack-protector -mno-red-zone \
               -fshort-wchar -fno-pic -fno-pie -DEFI_FUNCTION_WRAPPER \
