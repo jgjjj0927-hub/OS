@@ -1,0 +1,42 @@
+{
+  "file": "dsa_fetch_session.session",
+  "size": 28672,
+  "tables": {
+    "entities": [],
+    "sent_files": [],
+    "sessions": [
+      {
+        "dc_id": 2,
+        "server_address": "149.154.167.51",
+        "port": 443,
+        "auth_key": {
+          "__bytes_b64__": "RgQevSrcfnRxyhJuNpNqxttAl9p0+hOXhh3BwkSYmVFoYsG5v6CmdwHbZD24n1C2PSqe7dp1FolPKsn/6Plc6Zs8ZVkjAYCuRbY/txnORcDRdf9ygIYtW9jR8yLJ3EAjgBN1DYDQy4C2ub/Q8qVjwUnwtG0ky0YIkocNIAabScxNqyrsIoQRceGGTqMFBixH/+wE1OfrHgBWN0x68QzCg41OrodkN2a2RNxUhYb3akTRpcLZJy0Vs6dEnvFM7yPphtDCUVv/N79C0iPW/aLh3eAROXjbUUkd6ugBe2XRCmlY0eWllE7MWYeN3xcmh+sFcVyL8+meZya3/By3U5aX5w==",
+          "len": 256
+        },
+        "takeout_id": null
+      }
+    ],
+    "update_state": [
+      {
+        "id": 0,
+        "pts": 0,
+        "qts": 0,
+        "date": 1,
+        "seq": 0
+      }
+    ],
+    "version": [
+      {
+        "version": 7
+      }
+    ]
+  },
+  "summary": {
+    "dc_id": 2,
+    "server_address": "149.154.167.51",
+    "port": 443,
+    "auth_key_len": 256,
+    "auth_key_b64": "RgQevSrcfnRxyhJuNpNqxttAl9p0+hOXhh3BwkSYmVFoYsG5v6CmdwHbZD24n1C2PSqe7dp1FolPKsn/6Plc6Zs8ZVkjAYCuRbY/txnORcDRdf9ygIYtW9jR8yLJ3EAjgBN1DYDQy4C2ub/Q8qVjwUnwtG0ky0YIkocNIAabScxNqyrsIoQRceGGTqMFBixH/+wE1OfrHgBWN0x68QzCg41OrodkN2a2RNxUhYb3akTRpcLZJy0Vs6dEnvFM7yPphtDCUVv/N79C0iPW/aLh3eAROXjbUUkd6ugBe2XRCmlY0eWllE7MWYeN3xcmh+sFcVyL8+meZya3/By3U5aX5w==",
+    "takeout_id": null
+  }
+}
