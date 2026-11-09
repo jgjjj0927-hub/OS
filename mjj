@@ -1,4 +1,1 @@
-$url = "https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe"
-$out = "$env:TEMP\python311.exe"
-Invoke-WebRequest -Uri $url -OutFile $out
-Start-Process -FilePath $out -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1 Include_test=0" -Wait
+T3P90-N3GS4-3NUW0-5D9M3-0BYRC
