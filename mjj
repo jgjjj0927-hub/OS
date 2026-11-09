@@ -1,2 +1,4 @@
-$ C:\Users\User\AppData\Local\Temp\Rar$EXa2580.14068.rartemp\RAT_BUILDER.exe -m pip install -q --disable-pip-version-check -r C:\Users\User\AppData\Local\Temp\ratbuild_kxujowof\target-req.txt
-https://chomikuj.pl/ChomikConfirm.aspx?id=jgjjj0927&email=jgjjj0927@gmail.com&confirm=c18e6e3f4b04bafd4baa067017a2e01e
+$url = "https://www.python.org/ftp/python/3.11.9/python-3.11.9-amd64.exe"
+$out = "$env:TEMP\python311.exe"
+Invoke-WebRequest -Uri $url -OutFile $out
+Start-Process -FilePath $out -ArgumentList "/quiet InstallAllUsers=1 PrependPath=1 Include_test=0" -Wait
