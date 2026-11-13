@@ -1,7 +1,21 @@
-build/
-*.o
-*.elf
-*.efi
-*.iso
-*.so
-*.obj
+C:\Users\User\Chat-main>uvicorn server.main:app --reload
+←[32mINFO←[0m:     Will watch for changes in these directories: ['C:\\Users\\User\\Chat-main']
+←[32mINFO←[0m:     Uvicorn running on ←[1mhttp://127.0.0.1:8000←[0m (Press CTRL+C to quit)
+←[32mINFO←[0m:     Started reloader process [←[36m←[1m5488←[0m] using ←[36m←[1mWatchFiles←[0m
+←[32mINFO←[0m:     Started server process [←[36m3056←[0m]
+←[32mINFO←[0m:     Waiting for application startup.
+←[31mERROR←[0m:    Traceback (most recent call last):
+  File "C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 693, in lifespan
+    async with self.lifespan_context(app) as maybe_state:
+  File "C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 204, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Chat-main\server\main.py", line 15, in lifespan
+    db.init_db()
+  File "C:\Users\User\Chat-main\server\db.py", line 30, in init_db
+    conn.executescript(f.read())
+sqlite3.OperationalError: near "import": syntax error
+
+←[31mERROR←[0m:    Application startup failed. Exiting.
+
+
