@@ -1,21 +1,36 @@
-C:\Users\User\Chat-main>uvicorn server.main:app --reload
-←[32mINFO←[0m:     Will watch for changes in these directories: ['C:\\Users\\User\\Chat-main']
-←[32mINFO←[0m:     Uvicorn running on ←[1mhttp://127.0.0.1:8000←[0m (Press CTRL+C to quit)
-←[32mINFO←[0m:     Started reloader process [←[36m←[1m5488←[0m] using ←[36m←[1mWatchFiles←[0m
-←[32mINFO←[0m:     Started server process [←[36m3056←[0m]
-←[32mINFO←[0m:     Waiting for application startup.
-←[31mERROR←[0m:    Traceback (most recent call last):
-  File "C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\site-packages\starlette\routing.py", line 693, in lifespan
-    async with self.lifespan_context(app) as maybe_state:
-  File "C:\Users\User\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 204, in __aenter__
-    return await anext(self.gen)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\User\Chat-main\server\main.py", line 15, in lifespan
-    db.init_db()
-  File "C:\Users\User\Chat-main\server\db.py", line 30, in init_db
-    conn.executescript(f.read())
-sqlite3.OperationalError: near "import": syntax error
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL COLLATE NOCASE,
+    password_hash TEXT NOT NULL,
+    salt TEXT NOT NULL,
+    public_key TEXT NOT NULL,
+    created_at INTEGER NOT NULL
+);
 
-←[31mERROR←[0m:    Application startup failed. Exiting.
+CREATE TABLE IF NOT EXISTS channels (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    owner_id INTEGER NOT NULL REFERENCES users(id),
+    description TEXT DEFAULT '',
+    created_at INTEGER NOT NULL
+);
 
+CREATE TABLE IF NOT EXISTS channel_members (
+    channel_id INTEGER NOT NULL REFERENCES channels(id),
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    joined_at INTEGER NOT NULL,
+    PRIMARY KEY (channel_id, user_id)
+);
 
+CREATE TABLE IF NOT EXISTS chat_requests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    from_id INTEGER NOT NULL REFERENCES users(id),
+    to_id INTEGER NOT NULL REFERENCES users(id),
+    status TEXT DEFAULT 'pending',
+    created_at INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_chat_requests_to
+    ON chat_requests(to_id, status);
+CREATE INDEX IF NOT EXISTS idx_channel_members_user
+    ON channel_members(user_id);
