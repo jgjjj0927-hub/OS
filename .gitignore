@@ -1,46 +1,37 @@
 import re
 
 def parse_slug(slug: str) -> str:
-    """Превращает 'MoodPack-23482' в 'Mood Pack #23482'."""
-    parts = re.split(r"[-_]", slug)
-    out = []
-    for p in parts:
-        if p.isdigit():
-            out.append(f"#{p}")
-        elif p:
-            # вставляем пробел перед заглавными, если это camelCase
-            spaced = re.sub(r"([a-z])([A-Z])", r"\1 \2", p)
-            out.append(spaced)
-    return " ".join(out).strip()
+    """Превращает 'MoodPack-23482' в 'Mood Pack #23482'. Поддерживает любое имя."""
+    match = re.match(r"^(.*?)[-_]?(\d+)$", slug)
+    if match:
+        name_part, number = match.group(1), match.group(2)
+    else:
+        name_part, number = slug, None
+
+    spaced = re.sub(r"([a-z])([A-Z])", r"\1 \2", name_part)
+    spaced = re.sub(r"[-_]+", " ", spaced).strip()
+
+    if number:
+        return f"{spaced} #{number}"
+    return spaced
 
 
 
 
 
+иии
 
 
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+OFFER_KB = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="❌ Отозвать", callback_data="revoke_offer"),
+            InlineKeyboardButton(text="✅ Обменять", callback_data="accept_offer"),
+        ]
+    ]
+)
 
 
 
