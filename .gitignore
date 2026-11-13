@@ -1,32 +1,17 @@
-(venv) C:\Users\User\Offer-main>python main.py
-Traceback (most recent call last):
-  File "C:\Users\User\Offer-main\main.py", line 8, in <module>
-    from handlers import router
-  File "C:\Users\User\Offer-main\handlers.py", line 7, in <module>
-    from utils import parse_slug
-ImportError: cannot import name 'parse_slug' from 'utils' (C:\Users\User\Offer-main\utils.py)
+import re
 
-(venv) C:\Users\User\Offer-main>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def parse_slug(slug: str) -> str:
+    """Превращает 'MoodPack-23482' в 'Mood Pack #23482'."""
+    parts = re.split(r"[-_]", slug)
+    out = []
+    for p in parts:
+        if p.isdigit():
+            out.append(f"#{p}")
+        elif p:
+            # вставляем пробел перед заглавными, если это camelCase
+            spaced = re.sub(r"([a-z])([A-Z])", r"\1 \2", p)
+            out.append(spaced)
+    return " ".join(out).strip()
 
 
 
