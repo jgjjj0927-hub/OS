@@ -1,1 +1,93 @@
-https://yoursub.net/dXNyXzgyMjQ1Mjk1NThfYzMxZDkxMTEsMTc5NDU3MzAwNgDnzaZQnh3q
+(venv) C:\Users\User\Offer-main>python main.py
+Traceback (most recent call last):
+  File "C:\Users\User\Offer-main\main.py", line 8, in <module>
+    from handlers import router
+  File "C:\Users\User\Offer-main\handlers.py", line 7, in <module>
+    from utils import parse_slug
+ImportError: cannot import name 'parse_slug' from 'utils' (C:\Users\User\Offer-main\utils.py)
+
+(venv) C:\Users\User\Offer-main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
