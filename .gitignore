@@ -1,100 +1,12 @@
-from aiogram import Router, F
-from aiogram.filters import CommandStart, Command
-from aiogram.types import Message, CallbackQuery
-from aiogram.exceptions import TelegramBadRequest
+   
+        ```
+ ● Failed to log in to Apple ID
+ ├ C:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\isideload-0.5.2\src\auth\apple_account.rs:206
+ │
+ ● GrandSlam error during proof login request
+ ├ C:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\isideload-0.5.2\src\auth\apple_account.rs:860
+ │
+ ● Auth error -22406: Enter the correct password for this Apple Account.
+ ╰ C:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\isideload-0.5.2\src\auth\grandslam.rs:282
 
-from keyboards import OFFER_KB
-from utils import parse_slug
-import re
-
-router = Router()
-
-accepted_users: set[int] = set()
-
-
-@router.message(CommandStart())
-async def cmd_start(message: Message):
-    if not message.from_user:
-        return
-
-    accepted_users.add(message.from_user.id)
-
-    await message.answer(
-        "✅ <b>Условия приняты.</b>\n\n"
-        "Ты активировал автоматизацию чатов.\n\n"
-        "Используй команду:\n"
-        "<code>/hufi &lt;ссылка на NFT&gt; &lt;звёзды&gt;</code>\n\n"
-        "Пример:\n"
-        "<code>/hufi https://t.me/nft/MoodPack-23482 2300</code>"
-    )
-
-
-@router.message(Command("hufi"))
-async def cmd_hufi(message: Message):
-    if not message.from_user:
-        return
-
-    uid = message.from_user.id
-
-    if uid not in accepted_users:
-        await message.answer("Сначала отправь /start и прими условия.")
-        return
-
-    text = message.text or ""
-    args = text.split(maxsplit=2)
-
-    if len(args) != 3:
-        await message.answer(
-            "Формат: <code>/hufi &lt;ссылка&gt; &lt;звёзды&gt;</code>"
-        )
-        return
-
-    link = args[1].strip()
-    stars_raw = args[2].strip()
-
-    if not stars_raw.isdigit():
-        await message.answer("Звёзды должны быть числом.")
-        return
-
-    stars = int(stars_raw)
-
-    match = re.search(r"^https?://t\.me/nft/([A-Za-z0-9_\-]+)", link)
-    if not match:
-        await message.answer("Ссылка должна быть https://t.me/nft/&lt;slug&gt;")
-        return
-
-    name = parse_slug(match.group(1))
-
-    user_name = (
-        message.from_user.full_name
-        or message.from_user.username
-        or "User"
-    )
-    user_name = user_name.strip() or "User"
-
-    if len(user_name) > 64:
-        user_name = user_name[:64] + "…"
-    if len(name) > 64:
-        name = name[:64] + "…"
-
-    # скрытый символ для ссылки (zero-width space)
-    hidden_link = "\u200b"
-
-    offer_text = (
-        f'<a href="{link}">{hidden_link}</a>\n'  # невидимая ссылка на NFT
-        f'<a href="tg://user?id={uid}">{user_name}</a> собирается\n'
-        f'выкупить <b>{name}</b> за\n'
-        f'<b>{stars}</b> ⭐\n\n'
-        f'<i>Актуально ещё 48ч</i>'
-    )
-
-    try:
-        await message.answer(offer_text, reply_markup=OFFER_KB, disable_web_page_preview=False)
-    except TelegramBadRequest as e:
-        await message.answer(f"Не удалось отправить: {e}")
-
-
-@router.callback_query(F.data.in_({"revoke_offer", "accept_offer"}))
-async def cb_offer(call: CallbackQuery):
-    label = "отозван" if call.data == "revoke_offer" else "принят"
-    await call.answer(f"Оффер {label}", show_alert=False)
+```
