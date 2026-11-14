@@ -1,12 +1,2 @@
    
-        ```
- ● Failed to log in to Apple ID
- ├ C:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\isideload-0.5.2\src\auth\apple_account.rs:206
- │
- ● GrandSlam error during proof login request
- ├ C:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\isideload-0.5.2\src\auth\apple_account.rs:860
- │
- ● Auth error -22406: Enter the correct password for this Apple Account.
- ╰ C:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\isideload-0.5.2\src\auth\grandslam.rs:282
-
-```
+      Ug3grWSA3G4lbCL
